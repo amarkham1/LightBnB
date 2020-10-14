@@ -80,7 +80,15 @@ exports.addUser = addUser;
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = function(guest_id, limit = 10) {
-  return getAllProperties(null, 2);
+  const text = `
+  SELECT *
+  FROM reservations
+  WHERE guest_id = $1
+  LIMIT $2;
+  `;
+  const values = [guest_id, limit];
+  return pool.query(text, values)
+  .then (res => res.rows);
 }
 exports.getAllReservations = getAllReservations;
 
@@ -113,9 +121,13 @@ exports.getAllProperties = getAllProperties;
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function(property) {
-  const propertyId = Object.keys(properties).length + 1;
-  property.id = propertyId;
-  properties[propertyId] = property;
-  return Promise.resolve(property);
+  const text = `
+  SELECT *
+  FROM properties
+  WHERE properties = $1;
+  `;
+  const values = [property];
+  return pool.query(text, values)
+  .then(response => response.rows[0]);
 }
 exports.addProperty = addProperty;
