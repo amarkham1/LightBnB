@@ -1,5 +1,5 @@
 const database = require('../db/index');
-const dbHelpers = require('../dbHelpers/index')
+const dbHelpers = require('../dbHelpers');
 const apiRoutes = require('./routes/api');
 const userRoutes = require('./routes/user');
 

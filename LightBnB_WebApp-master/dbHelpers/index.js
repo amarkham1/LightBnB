@@ -1,6 +1,6 @@
 /// Users
 
-  module.exports = (db) => {
+module.exports = (db) => {
   const getUserWithEmail = function(email) {
     const queryString = `
     SELECT *
@@ -16,7 +16,7 @@
         return null;
       }
     });
-  }
+  };
 
   /**
    * Get a single user from the database given their id.
@@ -32,8 +32,8 @@
     const queryParams = [id];
     return db.query(queryString, queryParams)
     .then(response => res.rows[0]);
-  }
-
+  };
+  
   /**
    * Add a new user to the database.
    * @param {{name: string, password: string, email: string}} user
@@ -48,7 +48,7 @@
     const queryParams = [user.name, user.email, user.password];
     return db.query(queryString, queryParams)
     .then(response => response.rows[0]);
-  }
+  };
 
   /// Reservations
 
@@ -126,6 +126,7 @@
     .then(response => response.rows);
   };
 
+
   /**
    * Add a property to the database
    * @param {{}} property An object containing all of the property details.
@@ -141,5 +142,5 @@
     return db.query(queryString, queryParams)
     .then(response => response.rows[0]);
   }
-  return { getUserWithEmail, getUserWithId, addUser, getAllReservations, getAllProperties, addProperty };
+  return { addUser, addProperty, getUserWithEmail, getUserWithId, getAllReservations, getAllProperties };
 }
